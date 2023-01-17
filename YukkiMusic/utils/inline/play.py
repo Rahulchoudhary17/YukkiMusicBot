@@ -27,18 +27,46 @@ selections = [
     "▃▅▂▅▃▇▄▅▃",
 ]
 
+def time_to_sec(time: str):
+    x = time.split(":")
+
+    if len(x) == 2:
+        min = int(x[0])
+        sec = int(x[1])
+
+        total_sec = (min*60) + sec
+    elif len(x) == 3:
+        hour = int(x[0])
+        min = int(x[1])
+        sec = int(x[2])
+
+        total_sec = (hour*60*60) + (min*60) + sec
+
+    return total_sec
+
 
 ## After Edits with Timer Bar
 
 
 def stream_markup_timer(_, videoid, chat_id, played, dur):
-    bar = random.choice(selections)
+    played_sec = time_to_sec(played)
+    total_sec = time_to_sec(dur)
+
+    x, y = str(round(played_sec/total_sec,1)).split(".")
+    pos = int(y)
+
+    line = "—"
+    circle = "◉"
+
+    bar = line*(pos-1)
+    bar += circle
+    bar += line*(10-len(bar))
+    
     buttons = [
         [
             InlineKeyboardButton(
-                text=f"{played} {bar} {dur}",
-                callback_data="GetTimer",
-            )
+                text=f"Controlls", switch_inline_query_current_chat=""
+            ),
         ],
         [
             InlineKeyboardButton(
@@ -52,7 +80,8 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text=_["CLOSEMENU_BUTTON"], callback_data="close"
+                text=f"{played} {bar} {dur}",
+                callback_data="GetTimer",
             )
         ],
     ]
@@ -60,7 +89,19 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
 
 
 def telegram_markup_timer(_, chat_id, played, dur):
-    bar = random.choice(selections)
+    played_sec = time_to_sec(played)
+    total_sec = time_to_sec(dur)
+
+    x, y = str(round(played_sec/total_sec,1)).split(".")
+    pos = int(y)
+
+    line = "—"
+    circle = "◉"
+
+    bar = line*(pos-1)
+    bar += circle
+    bar += line*(10-len(bar))
+    
     buttons = [
         [
             InlineKeyboardButton(
@@ -88,6 +129,11 @@ def stream_markup(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
+                text=f"Controlls", switch_inline_query_current_chat=""
+            ),
+        ],
+        [
+            InlineKeyboardButton(
                 text=_["PL_B_2"],
                 callback_data=f"add_playlist {videoid}",
             ),
@@ -95,11 +141,6 @@ def stream_markup(_, videoid, chat_id):
                 text=_["PL_B_3"],
                 callback_data=f"PanelMarkup None|{chat_id}",
             ),
-        ],
-        [
-            InlineKeyboardButton(
-                text=_["CLOSEMENU_BUTTON"], callback_data="close"
-            )
         ],
     ]
     return buttons
