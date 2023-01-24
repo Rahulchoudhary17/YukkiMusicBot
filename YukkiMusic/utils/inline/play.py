@@ -129,7 +129,7 @@ def stream_markup(_, videoid, chat_id):
                 callback_data=f"add_playlist {videoid}",
             ),
             InlineKeyboardButton(
-                text=_["PL_B_3"],
+                text=f"More Menu",
                 callback_data=f"PanelMarkup None|{chat_id}",
             ),
         ],
