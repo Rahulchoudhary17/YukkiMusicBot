@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
-
 import random
 
 from pyrogram.types import InlineKeyboardButton
@@ -74,7 +65,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
                 callback_data=f"add_playlist {videoid}",
             ),
             InlineKeyboardButton(
-                text=_["PL_B_3"],
+                text=_f"More Menu",
                 callback_data=f"PanelMarkup {videoid}|{chat_id}",
             ),
         ],
@@ -270,33 +261,17 @@ def panel_markup_1(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
-                text="⏸ Pause", callback_data=f"ADMIN Pause|{chat_id}"
+                text="Lyrics", callback_data=f""
             ),
             InlineKeyboardButton(
-                text="▶️ Resume",
-                callback_data=f"ADMIN Resume|{chat_id}",
+                text="Download Song",
+                callback_data=f"",
             ),
         ],
         [
-            InlineKeyboardButton(
-                text="⏯ Skip", callback_data=f"ADMIN Skip|{chat_id}"
-            ),
-            InlineKeyboardButton(
-                text="⏹ Stop", callback_data=f"ADMIN Stop|{chat_id}"
-            ),
-        ],
-        [
-            InlineKeyboardButton(
-                text="◀️",
-                callback_data=f"Pages Back|0|{videoid}|{chat_id}",
-            ),
             InlineKeyboardButton(
                 text="🔙 Back",
                 callback_data=f"MainMarkup {videoid}|{chat_id}",
-            ),
-            InlineKeyboardButton(
-                text="▶️",
-                callback_data=f"Pages Forw|0|{videoid}|{chat_id}",
             ),
         ],
     ]
